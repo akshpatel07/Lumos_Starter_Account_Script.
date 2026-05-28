@@ -5,7 +5,7 @@
 
 from playwright.async_api import Page, TimeoutError as PWTimeout
 from pages.base_page import BasePage
-from config.settings import SITE_URL, XPATHS
+from config.settings import get_site_url, XPATHS
 import asyncio
 
 
@@ -17,7 +17,7 @@ class NavPage(BasePage):
         """Navigate to the StepUp starter page."""
         print("[*] Opening StepUp page ...")
         await asyncio.sleep(3)
-        await self.page.goto(SITE_URL, timeout=40_000)
+        await self.page.goto(get_site_url(), timeout=40_000)
         await self.page.wait_for_load_state("domcontentloaded")
         print("[*] Page loaded.")
 

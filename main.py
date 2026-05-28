@@ -25,6 +25,7 @@ from actions.answer_action import AnswerAction
 from actions.nav_action   import NavAction
 from reports.report_builder import TestReport, QuestionResult
 from reports.email_sender   import send_report, save_html_report
+from config.state_manager   import increment_code
 
 
 async def run():
@@ -185,6 +186,9 @@ async def run():
             # ── 7. Save HTML report + send email ───────────────
             html_file = save_html_report(report)
             send_report(report)
+
+            # ── 8. Increment D-code for the next run ────────────────
+            increment_code()
 
             print(f"\n[OK] Automation complete.")
             print(f"    HTML Report : {html_file}")

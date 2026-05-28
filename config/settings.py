@@ -6,12 +6,23 @@
 import os
 
 # ── Site ──────────────────────────────────────────────────────
-SITE_URL = (
-    "https://www.lumoslearning.com/llwp/stepup-starter-for-schools.html?schoolid=439546&code=D050"
+# Base URL without the code parameter — the D-code is appended
+# dynamically by get_site_url() using the auto-incrementing counter.
+_SITE_BASE_URL = (
+    "https://www.lumoslearning.com/llwp/stepup-starter-for-schools.html"
+    "?schoolid=439546&code="
 )
 
+def get_site_url() -> str:
+    """Return the full URL with the current D-code (e.g. D001, D002 …)."""
+    from config.state_manager import get_current_code
+    code = get_current_code()
+    url  = _SITE_BASE_URL + code
+    print(f"[*] Using site URL: {url}  (code: {code})")
+    return url
+
 # ── OpenAI ────────────────────────────────────────────────────
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "API_KEY")
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "sk-")
 GPT_MODEL      = "gpt-4o-mini"
 
 # ── Browser ───────────────────────────────────────────────────
